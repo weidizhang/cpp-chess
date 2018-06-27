@@ -1,5 +1,9 @@
 #include "headers/piece.h"
 
+Piece::Piece()
+{    
+}
+
 Piece::Piece(char newType, int newVal)
     : type(newType), val(newVal)
 {

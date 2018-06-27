@@ -6,7 +6,8 @@ class Piece
     char type;
     int val;
 public:
-    Piece(char newType = '\0', int newVal = 0);
+    Piece();
+    Piece(char newType, int newVal);
 
     char getType();
     int getValue();
