@@ -12,6 +12,37 @@ void Board::createStartPieces()
     {        
         pieceAt(c, 7) = Pawn('B');
         pieceAt(c, 2) = Pawn('W');
+
+        pieceAt(c, 8) = createTopStartPiece(c, 8);
+        pieceAt(c, 1) = createTopStartPiece(c, 1);
+    }
+}
+
+Piece Board::createTopStartPiece(char letter, int num)
+{
+    char color = (num == 8) ? 'B' : 'W';
+    switch (letter)
+    {
+        case 'a':
+        case 'h':
+            return Rook(color);
+
+        case 'b':
+        case 'g':
+            return Knight(color);
+
+        case 'c':
+        case 'f':
+            return Bishop(color);
+
+        case 'd':
+            return Queen(color);
+
+        case 'e':
+            return King(color);
+
+        default:
+            return Piece();
     }
 }
 

@@ -8,6 +8,7 @@ class Board
     Piece * pieces;
 
     void createStartPieces();
+    Piece createTopStartPiece(char letter, int num);
     int posToIndex(char letter, int num);
 public:
     Board();
