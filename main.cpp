@@ -4,5 +4,6 @@
 int main()
 {
     Board b;
+    cout << b;
     return 0;
 }

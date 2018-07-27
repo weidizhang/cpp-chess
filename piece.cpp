@@ -1,6 +1,7 @@
 #include "headers/piece.h"
 
 Piece::Piece()
+    : type(' ')
 {
 }
 
