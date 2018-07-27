@@ -29,17 +29,26 @@ Piece & Board::pieceAt(char letter, int num)
 
 ostream & operator << (ostream & out, Board & b)
 {
+    out << "   a b c d e f g h" << endl;
+    out << "  -----------------" << endl;
+
     for (int i = 8; i > 0; --i)
     {
+        out << i << " ";
         for (char c = 'a'; c <= 'h'; ++c)
         {
-            out << c << i << ": ";
             Piece p = b.pieceAt(c, i);
-            out << p.getType() << endl;
+            out << "|" << p.getType();
+
+            if (c == 'h')
+                out << "| " << i;
         }
 
         out << endl;
     }
+
+    out << "  -----------------" << endl;
+    out << "   a b c d e f g h" << endl;
 
     return out;
 }
