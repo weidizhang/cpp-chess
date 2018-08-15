@@ -1,4 +1,6 @@
 #include <iostream>
+#include <vector>
+
 #include "piece.h"
 
 using namespace std;
@@ -10,10 +12,12 @@ class Board
     void createStartPieces();
     Piece createTopStartPiece(char letter, int num);
     int posToIndex(char letter, int num);
+    pair<char, int> indexToPos(int index);
 public:
     Board();
 
     Piece & pieceAt(char letter, int num);
+    vector<string> validMovesForPieceAt(char letter, int num);
     friend ostream & operator << (ostream & out, Board & b);
 
     ~Board();

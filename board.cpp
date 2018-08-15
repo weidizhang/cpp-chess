@@ -58,9 +58,22 @@ int Board::posToIndex(char letter, int num)
     return position;
 }
 
+pair<char, int> Board::indexToPos(int index)
+{
+    char letter = (index % 8) + 97;
+    int num = (index / 8) + 1;
+    return make_pair(letter, num);
+}
+
 Piece & Board::pieceAt(char letter, int num)
 {
     return pieces[posToIndex(letter, num)];
+}
+
+vector<string> validMovesForPieceAt(char letter, int num)
+{
+    vector<string> moves;
+    return moves; // TODO
 }
 
 ostream & operator << (ostream & out, Board & b)
