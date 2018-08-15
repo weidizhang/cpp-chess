@@ -48,6 +48,11 @@ Piece Board::createTopStartPiece(char letter, int num)
 
 int Board::posToIndex(char letter, int num)
 {
+    /*
+     * The board is represented with a1 being index 0, a2 being index 1,
+     * b1 being index 8, b2 being index 9, etc.
+     */   
+
     int offset = 96; // 'a' is 97
     int position = (letter - offset) + ((num - 1) * 8) - 1;
     return position;
