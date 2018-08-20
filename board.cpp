@@ -1,7 +1,7 @@
 #include "headers/board.h"
 
 Board::Board()
-    : pieces(new Piece[64])
+    : pieces(new Piece*[64])
 {
     createStartPieces();
 }
@@ -10,39 +10,39 @@ void Board::createStartPieces()
 {
     for (char c = 'a'; c <= 'h'; ++c)
     {        
-        pieceAt(c, 7) = Pawn('B');
-        pieceAt(c, 2) = Pawn('W');
+        pieceAt(c, 7) = new Pawn('B');
+        pieceAt(c, 2) = new Pawn('W');
 
         pieceAt(c, 8) = createTopStartPiece(c, 8);
         pieceAt(c, 1) = createTopStartPiece(c, 1);
     }
 }
 
-Piece Board::createTopStartPiece(char letter, int num)
+Piece * Board::createTopStartPiece(char letter, int num)
 {
     char color = (num == 8) ? 'B' : 'W';
     switch (letter)
     {
         case 'a':
         case 'h':
-            return Rook(color);
+            return new Rook(color);
 
         case 'b':
         case 'g':
-            return Knight(color);
+            return new Knight(color);
 
         case 'c':
         case 'f':
-            return Bishop(color);
+            return new Bishop(color);
 
         case 'd':
-            return Queen(color);
+            return new Queen(color);
 
         case 'e':
-            return King(color);
+            return new King(color);
 
         default:
-            return Piece();
+            return new Piece();
     }
 }
 
@@ -65,15 +65,28 @@ pair<char, int> Board::indexToPos(int index)
     return make_pair(letter, num);
 }
 
-Piece & Board::pieceAt(char letter, int num)
+string Board::indexToString(int index)
+{
+    pair<char, int> pos = indexToPos(index);
+    string s = pos.first + "" + pos.second;
+    return s;
+}
+
+Piece *& Board::pieceAt(char letter, int num)
 {
     return pieces[posToIndex(letter, num)];
 }
 
-vector<string> validMovesForPieceAt(char letter, int num)
+vector<string> Board::validMovesForPieceAt(char letter, int num)
 {
-    vector<string> moves;
-    return moves; // TODO
+    Piece * p = pieceAt(letter, num);
+    int index = posToIndex(letter, num);
+
+    cout << index << endl;
+
+    vector<string> moves = p->getMoves(pieces, index);
+    cout << moves.size() << endl;
+    return moves;
 }
 
 ostream & operator << (ostream & out, Board & b)
@@ -86,8 +99,10 @@ ostream & operator << (ostream & out, Board & b)
         out << i << " ";
         for (char c = 'a'; c <= 'h'; ++c)
         {
-            Piece p = b.pieceAt(c, i);
-            out << "|" << p.getType();
+            Piece * p = b.pieceAt(c, i);
+            char type = (p == nullptr) ? ' ' : p->getType();
+
+            out << "|" << type;
 
             if (c == 'h')
                 out << "| " << i;

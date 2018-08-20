@@ -1,6 +1,11 @@
 #ifndef PIECE_H
 #define PIECE_H
 
+#include <vector>
+#include <string>
+
+using namespace std;
+
 class Piece
 {
     char type;
@@ -13,6 +18,8 @@ public:
     char getType();
     char getColor();
     int getValue();
+
+    virtual vector<string> getMoves(Piece ** fullPieces, int myIndex);    
 };
 
 struct King : public Piece { King(char newColor); };
@@ -20,6 +27,14 @@ struct Queen : public Piece { Queen(char newColor); };
 struct Rook : public Piece { Rook(char newColor); };
 struct Bishop : public Piece { Bishop(char newColor); };
 struct Knight : public Piece { Knight(char newColor); };
-struct Pawn : public Piece { Pawn(char newColor); };
+
+class Pawn : public Piece
+{
+    bool firstMove;
+public:
+    Pawn(char newColor);
+
+    virtual vector<string> getMoves(Piece ** fullPieces, int myIndex);
+};
 
 #endif
