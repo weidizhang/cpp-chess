@@ -26,9 +26,13 @@ int Piece::getValue()
     return val;
 }
 
+bool Piece::isPositionEmpty(Piece ** fullPieces, int index)
+{
+    return fullPieces[index] == nullptr;
+}
+
 vector<string> Piece::getMoves(Piece ** fullPieces, int myIndex)
 {
-    cout << "DEBUG Piece::getMoves called" << endl;
     return vector<string>();
 }
 
@@ -41,8 +45,7 @@ Queen::Queen(char newColor) : Piece('Q', newColor, 1000) {}
 Rook::Rook(char newColor) : Piece('R', newColor, 525) {}
 Bishop::Bishop(char newColor) : Piece('B', newColor, 350) {}
 Knight::Knight(char newColor) : Piece('N', newColor, 350) {}
-Pawn::Pawn(char newColor) : Piece('P', newColor, 100), firstMove(false) {}
-
+Pawn::Pawn(char newColor) : Piece('P', newColor, 100), firstMove(true) {}
 
 vector<string> Pawn::getMoves(Piece ** fullPieces, int myIndex)
 {
@@ -50,11 +53,16 @@ vector<string> Pawn::getMoves(Piece ** fullPieces, int myIndex)
 
     vector<string> moves;
 
-    int fwdStep = myIndex + (getColor() == 'W' ? 8 : -8);
-    //int fwdStepFirstMove = firstMove ? fwdStep * 2 : 0; // if non 0 and not taken add this?
+    int stepOffset = getColor() == 'W' ? 8 : -8;
+    int fwdStep = myIndex + stepOffset;
+    if (isPositionEmpty(fullPieces, fwdStep))
+    {
+        moves.push_back(Board::indexToString(fwdStep));
 
-    moves.push_back(Board::indexToString(fwdStep)); // add check if that spot is taken on board;
-    cout << "DEBUG Pawn::getMoves called" << endl; // not printed
+        int dblFwdStep = myIndex + (2 * stepOffset);
+        if (firstMove && isPositionEmpty(fullPieces, dblFwdStep))
+            moves.push_back(Board::indexToString(dblFwdStep));
+    }
 
     return moves;
 }

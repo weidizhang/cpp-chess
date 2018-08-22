@@ -18,8 +18,9 @@ public:
     char getType();
     char getColor();
     int getValue();
+    bool isPositionEmpty(Piece ** fullPieces, int index);
 
-    virtual vector<string> getMoves(Piece ** fullPieces, int myIndex);    
+    virtual vector<string> getMoves(Piece ** fullPieces, int myIndex);
 
     virtual ~Piece();
 };
