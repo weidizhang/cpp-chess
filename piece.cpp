@@ -32,6 +32,10 @@ vector<string> Piece::getMoves(Piece ** fullPieces, int myIndex)
     return vector<string>();
 }
 
+Piece::~Piece()
+{
+}
+
 King::King(char newColor) : Piece('K', newColor, 10000) {}
 Queen::Queen(char newColor) : Piece('Q', newColor, 1000) {}
 Rook::Rook(char newColor) : Piece('R', newColor, 525) {}

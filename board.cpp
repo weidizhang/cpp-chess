@@ -42,7 +42,7 @@ Piece * Board::createTopStartPiece(char letter, int num)
             return new King(color);
 
         default:
-            return new Piece();
+            return nullptr;
     }
 }
 
@@ -119,5 +119,8 @@ ostream & operator << (ostream & out, Board & b)
 
 Board::~Board()
 {
+    for (int i = 0; i < 64; ++i)
+        if (pieces[i] != nullptr)
+            delete pieces[i];
     delete [] pieces;
 }

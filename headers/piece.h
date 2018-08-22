@@ -20,6 +20,8 @@ public:
     int getValue();
 
     virtual vector<string> getMoves(Piece ** fullPieces, int myIndex);    
+
+    virtual ~Piece();
 };
 
 struct King : public Piece { King(char newColor); };
