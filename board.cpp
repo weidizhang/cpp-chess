@@ -68,7 +68,10 @@ pair<char, int> Board::indexToPos(int index)
 string Board::indexToString(int index)
 {
     pair<char, int> pos = indexToPos(index);
-    string s = pos.first + "" + pos.second;
+
+    string s;
+    s.push_back(pos.first);
+    s += to_string(pos.second);
     return s;
 }
 
@@ -82,10 +85,7 @@ vector<string> Board::validMovesForPieceAt(char letter, int num)
     Piece * p = pieceAt(letter, num);
     int index = posToIndex(letter, num);
 
-    cout << index << endl;
-
     vector<string> moves = p->getMoves(pieces, index);
-    cout << moves.size() << endl;
     return moves;
 }
 

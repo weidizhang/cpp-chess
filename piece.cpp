@@ -46,7 +46,7 @@ vector<string> Pawn::getMoves(Piece ** fullPieces, int myIndex)
 
     vector<string> moves;
 
-    int fwdStep = getColor() == 'W' ? 8 : -8;
+    int fwdStep = myIndex + (getColor() == 'W' ? 8 : -8);
     //int fwdStepFirstMove = firstMove ? fwdStep * 2 : 0; // if non 0 and not taken add this?
 
     moves.push_back(Board::indexToString(fwdStep)); // add check if that spot is taken on board;

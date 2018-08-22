@@ -7,8 +7,8 @@ int main()
     cout << b;
 
     vector<string> moves = b.validMovesForPieceAt('e', 2);
-    //for (auto pos : moves)
-    //    cout << pos << endl;
+    for (auto pos : moves)
+        cout << pos << endl;
 
     return 0;
 }
