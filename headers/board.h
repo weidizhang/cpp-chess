@@ -22,7 +22,7 @@ public:
 
     static int posToIndex(char letter, int num);
     static pair<char, int> indexToPos(int index);
-    static string indexToString(int index);
+    static string posToString(char letter, int num);
 
     friend ostream & operator << (ostream & out, Board & b);
 

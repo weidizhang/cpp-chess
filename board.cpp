@@ -46,6 +46,19 @@ Piece * Board::createTopStartPiece(char letter, int num)
     }
 }
 
+Piece *& Board::pieceAt(char letter, int num)
+{
+    return pieces[posToIndex(letter, num)];
+}
+
+vector<string> Board::validMovesForPieceAt(char letter, int num)
+{
+    Piece * p = pieceAt(letter, num);
+
+    vector<string> moves = p->getMoves(pieces, letter, num);
+    return moves;
+}
+
 int Board::posToIndex(char letter, int num)
 {
     /*
@@ -65,28 +78,12 @@ pair<char, int> Board::indexToPos(int index)
     return make_pair(letter, num);
 }
 
-string Board::indexToString(int index)
+string Board::posToString(char letter, int num)
 {
-    pair<char, int> pos = indexToPos(index);
-
     string s;
-    s.push_back(pos.first);
-    s += to_string(pos.second);
+    s.push_back(letter);
+    s += to_string(num);
     return s;
-}
-
-Piece *& Board::pieceAt(char letter, int num)
-{
-    return pieces[posToIndex(letter, num)];
-}
-
-vector<string> Board::validMovesForPieceAt(char letter, int num)
-{
-    Piece * p = pieceAt(letter, num);
-    int index = posToIndex(letter, num);
-
-    vector<string> moves = p->getMoves(pieces, index);
-    return moves;
 }
 
 ostream & operator << (ostream & out, Board & b)

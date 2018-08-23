@@ -21,17 +21,22 @@ char Piece::getColor()
     return color;
 }
 
+int Piece::getColorInt()
+{
+    return color == 'W' ? 1 : -1;
+}
+
 int Piece::getValue()
 {
     return val;
 }
 
-bool Piece::isPositionEmpty(Piece ** fullPieces, int index)
+bool Piece::isPositionEmpty(Piece ** fullPieces, char letter, int num)
 {
-    return fullPieces[index] == nullptr;
+    return fullPieces[Board::posToIndex(letter, num)] == nullptr;
 }
 
-vector<string> Piece::getMoves(Piece ** fullPieces, int myIndex)
+vector<string> Piece::getMoves(Piece ** fullPieces, char myLetter, int myNum)
 {
     return vector<string>();
 }
@@ -47,22 +52,25 @@ Bishop::Bishop(char newColor) : Piece('B', newColor, 350) {}
 Knight::Knight(char newColor) : Piece('N', newColor, 350) {}
 Pawn::Pawn(char newColor) : Piece('P', newColor, 100), firstMove(true) {}
 
-vector<string> Pawn::getMoves(Piece ** fullPieces, int myIndex)
+vector<string> Pawn::getMoves(Piece ** fullPieces, char myLetter, int myNum)
 {
     // TODO: implement support for en passant capture, which would require tracking the previous move on the board
 
     vector<string> moves;
 
-    int stepOffset = getColor() == 'W' ? 8 : -8;
-    int fwdStep = myIndex + stepOffset;
-    if (isPositionEmpty(fullPieces, fwdStep))
+    int fwdStep = myNum + getColorInt();
+    if (isPositionEmpty(fullPieces, myLetter, fwdStep))
     {
-        moves.push_back(Board::indexToString(fwdStep));
+        moves.push_back(Board::posToString(myLetter, fwdStep));
 
-        int dblFwdStep = myIndex + (2 * stepOffset);
-        if (firstMove && isPositionEmpty(fullPieces, dblFwdStep))
-            moves.push_back(Board::indexToString(dblFwdStep));
+        int dblFwdStep = myNum + (2 * getColorInt());
+        if (firstMove && isPositionEmpty(fullPieces, myLetter, dblFwdStep))
+            moves.push_back(Board::posToString(myLetter, dblFwdStep));
     }
+
+    // TODO: implement adding possible captures
+    // POSSIBLE TODO: split normal moves & capture moves into two different functions, then getMoves returns
+    // returns both returned move vectors combined.
 
     return moves;
 }

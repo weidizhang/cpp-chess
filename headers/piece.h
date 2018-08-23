@@ -17,10 +17,12 @@ public:
 
     char getType();
     char getColor();
+    int getColorInt();
     int getValue();
-    bool isPositionEmpty(Piece ** fullPieces, int index);
 
-    virtual vector<string> getMoves(Piece ** fullPieces, int myIndex);
+    bool isPositionEmpty(Piece ** fullPieces, char letter, int num);
+
+    virtual vector<string> getMoves(Piece ** fullPieces, char myLetter, int myNum);
 
     virtual ~Piece();
 };
@@ -37,7 +39,7 @@ class Pawn : public Piece
 public:
     Pawn(char newColor);
 
-    virtual vector<string> getMoves(Piece ** fullPieces, int myIndex);
+    virtual vector<string> getMoves(Piece ** fullPieces, char myLetter, int myNum);
 };
 
 #endif
