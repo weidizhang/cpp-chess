@@ -21,6 +21,8 @@ public:
     int getValue();
 
     bool isPositionEmpty(Piece ** fullPieces, char letter, int num);
+    bool isPositionInBounds(char letter, int num);
+    bool isOpponentPiece(Piece ** fullPieces, char letter, int num);
 
     virtual vector<string> getMoves(Piece ** fullPieces, char myLetter, int myNum);
 

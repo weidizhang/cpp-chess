@@ -36,6 +36,17 @@ bool Piece::isPositionEmpty(Piece ** fullPieces, char letter, int num)
     return fullPieces[Board::posToIndex(letter, num)] == nullptr;
 }
 
+bool Piece::isPositionInBounds(char letter, int num)
+{
+    return letter >= 'a' && letter <= 'h' && num >= 1 && num <= 8;
+}
+
+bool Piece::isOpponentPiece(Piece ** fullPieces, char letter, int num)
+{
+    Piece * p = fullPieces[Board::posToIndex(letter, num)];
+    return p != nullptr && p->getColor() != getColor();
+}
+
 vector<string> Piece::getMoves(Piece ** fullPieces, char myLetter, int myNum)
 {
     return vector<string>();
@@ -59,18 +70,22 @@ vector<string> Pawn::getMoves(Piece ** fullPieces, char myLetter, int myNum)
     vector<string> moves;
 
     int fwdStep = myNum + getColorInt();
-    if (isPositionEmpty(fullPieces, myLetter, fwdStep))
+    if (isPositionInBounds(myLetter, fwdStep) && isPositionEmpty(fullPieces, myLetter, fwdStep))
     {
         moves.push_back(Board::posToString(myLetter, fwdStep));
 
         int dblFwdStep = myNum + (2 * getColorInt());
-        if (firstMove && isPositionEmpty(fullPieces, myLetter, dblFwdStep))
+        if (firstMove && isPositionEmpty(fullPieces, myLetter, dblFwdStep)) // no need for bound check because it must be in bounds if it is the first move
             moves.push_back(Board::posToString(myLetter, dblFwdStep));
     }
 
-    // TODO: implement adding possible captures
-    // POSSIBLE TODO: split normal moves & capture moves into two different functions, then getMoves returns
-    // returns both returned move vectors combined.
+    char leftL = myLetter - getColorInt();
+    char rightL = myLetter + getColorInt();
+    
+    if (isPositionInBounds(leftL, fwdStep) && isOpponentPiece(fullPieces, leftL, fwdStep))
+        moves.push_back(Board::posToString(leftL, fwdStep));
+    if (isPositionInBounds(rightL, fwdStep) && isOpponentPiece(fullPieces, rightL, fwdStep))
+        moves.push_back(Board::posToString(rightL, fwdStep));    
 
     return moves;
 }
